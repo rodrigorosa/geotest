@@ -1,8 +1,7 @@
 import React from 'react';
 import {SafeAreaView, StyleSheet, ScrollView, StatusBar} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import CurrentPosition from './CurrentPosition';
-import WatchedPosition from './WatchedPosition';
+import PrintGeolocation from './PrintGeolocation';
 
 const App = () => {
   return (
@@ -12,8 +11,7 @@ const App = () => {
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}>
-          <CurrentPosition />
-          <WatchedPosition />
+          <PrintGeolocation />
         </ScrollView>
       </SafeAreaView>
     </>

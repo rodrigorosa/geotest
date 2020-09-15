@@ -3,12 +3,18 @@ import {View, Text, StyleSheet} from 'react-native';
 import {useGeolocation} from './useGeolocation';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 
-const WatchedPosition = () => {
-  const [error, position] = useGeolocation();
+type WatchedPositionProps = {
+  useGPS: boolean;
+};
+
+const WatchedPosition = ({useGPS}: WatchedPositionProps) => {
+  const [error, position] = useGeolocation(useGPS);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Watched Position</Text>
+      <Text style={styles.title}>{`Watched Position using ${
+        useGPS ? 'GPS' : 'Network'
+      }`}</Text>
 
       <View style={styles.content}>
         {error ? (
@@ -38,8 +44,8 @@ const styles = StyleSheet.create({
   },
   title: {
     color: Colors.black,
-    fontSize: 24,
-    fontWeight: '600',
+    fontSize: 20,
+    fontWeight: '500',
   },
 });
 

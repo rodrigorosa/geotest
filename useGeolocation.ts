@@ -6,7 +6,9 @@ interface GeolocationData {
   longitude: number;
 }
 
-export const useGeolocation = (): [string, GeolocationData] => {
+export const useGeolocation = (
+  enableGPS: boolean,
+): [string, GeolocationData] => {
   const [error, setError] = useState('');
   const [position, setPosition] = useState<GeolocationData>({
     latitude: 0,
@@ -23,6 +25,7 @@ export const useGeolocation = (): [string, GeolocationData] => {
         });
       },
       (e) => setError(e.message),
+      {enableHighAccuracy: enableGPS},
     );
     return () => Geolocation.clearWatch(watchId);
   }, []);

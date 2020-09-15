@@ -3,8 +3,11 @@ import Geolocation from '@react-native-community/geolocation';
 import {Button, View, Text, StyleSheet, CheckBox} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 
-const CurrentPosition = () => {
-  const [isSelected, setSelection] = useState(true);
+type CurrentPositionProps = {
+  useGPS: boolean;
+};
+
+const CurrentPosition = ({useGPS}: CurrentPositionProps) => {
   const [error, setError] = useState('');
   const [position, setPosition] = useState({
     latitude: 0,
@@ -21,13 +24,15 @@ const CurrentPosition = () => {
         });
       },
       (e) => setError(e.message),
-      {enableHighAccuracy: isSelected},
+      {enableHighAccuracy: useGPS},
     );
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Current Position</Text>
+      <Text style={styles.title}>{`Current Position using ${
+        useGPS ? 'GPS' : 'Network'
+      }`}</Text>
 
       <View style={styles.content}>
         {error ? (
@@ -36,12 +41,6 @@ const CurrentPosition = () => {
           <>
             <Text>Latitude: {position.latitude}</Text>
             <Text>Longitude: {position.longitude}</Text>
-
-            <View style={styles.checkboxContainer}>
-              <CheckBox value={isSelected} onValueChange={setSelection} />
-              <Text style={styles.label}>Use GPS</Text>
-            </View>
-
             <Button title="Update Current Position" onPress={getPosition} />
           </>
         )}
@@ -64,8 +63,8 @@ const styles = StyleSheet.create({
   },
   title: {
     color: Colors.black,
-    fontSize: 24,
-    fontWeight: '600',
+    fontSize: 20,
+    fontWeight: '500',
   },
   checkboxContainer: {
     flexDirection: 'row',
